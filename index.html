@@ -10,12 +10,46 @@
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#0b0b0d">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script>
+    // Turn animations on only when JavaScript works and the visitor hasn't asked for reduced motion.
+    (function () {
+      var d = document.documentElement;
+      d.classList.add("js");
+      var reduce = false;
+      try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+      if (reduce) return;
+      d.classList.add("motion");
+      try {
+        if (sessionStorage.getItem("aurumIntro")) d.classList.add("no-intro");
+        else sessionStorage.setItem("aurumIntro", "1");
+      } catch (e) {}
+      // Safety net: if the main script never starts, show everything.
+      setTimeout(function () { if (!window.__aurum) d.classList.remove("motion"); }, 5000);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="wa" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </symbol>
+  </svg>
+
+  <!-- Opening animation -->
+  <div class="intro" aria-hidden="true">
+    <div class="intro-mark">
+      <svg viewBox="0 0 100 100"><rect x="3" y="3" width="94" height="94" rx="18" pathLength="1"/></svg>
+      <span>Au</span>
+    </div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+
   <header class="nav" id="top">
     <div class="container nav-inner">
       <a href="#top" class="logo" aria-label="Aurum Web Design home">
@@ -32,18 +66,23 @@
         <a href="#contact" class="btn btn-small">Get a Quote</a>
       </nav>
     </div>
+    <div class="nav-progress" aria-hidden="true"></div>
   </header>
 
   <main>
     <section class="hero">
       <div class="hero-glow" aria-hidden="true"></div>
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
       <div class="container hero-inner">
         <p class="eyebrow">Now Booking New Projects</p>
-        <h1>The <em>Gold Standard</em><br>in Web Design</h1>
+        <h1>
+          <span class="line"><span class="line-in">The <em>Gold Standard</em></span></span>
+          <span class="line"><span class="line-in">in Web Design</span></span>
+        </h1>
         <p class="lead">Custom websites that look stunning, load fast and turn visitors into customers. Built with care, made to last.</p>
         <div class="hero-actions">
-          <a href="#contact" class="btn">Start Your Project</a>
-          <a href="#services" class="btn btn-ghost">See What We Do</a>
+          <a href="#contact" class="btn" data-magnetic>Start Your Project</a>
+          <a href="#services" class="btn btn-ghost" data-magnetic>See What We Do</a>
         </div>
         <ul class="hero-points">
           <li>Custom design, never templates</li>
@@ -51,52 +90,66 @@
           <li>Built to rank on Google</li>
         </ul>
       </div>
+      <a href="#services" class="scroll-hint" aria-label="Scroll down to services"><span></span></a>
     </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-set">
+          <span>Custom Design</span><i>&#9670;</i>
+          <span class="outline">Mobile-First</span><i>&#9670;</i>
+          <span>Lightning Fast</span><i>&#9670;</i>
+          <span class="outline">Built to Rank</span><i>&#9670;</i>
+          <span>E-Commerce</span><i>&#9670;</i>
+          <span class="outline">Made to Last</span><i>&#9670;</i>
+        </div>
+      </div>
+    </div>
 
     <section class="section" id="services">
       <div class="container">
-        <p class="eyebrow">What We Do</p>
-        <h2>Websites worth their weight in gold</h2>
-        <p class="section-lead">Everything your business needs to look its best online, from the first sketch to launch day and beyond.</p>
-        <div class="grid cards">
-          <article class="card">
+        <p class="eyebrow" data-reveal>What We Do</p>
+        <h2 data-split>Websites worth their weight in gold</h2>
+        <p class="section-lead" data-reveal>Everything your business needs to look its best online, from the first sketch to launch day and beyond.</p>
+        <div class="grid cards" data-stagger>
+          <article class="card" data-reveal data-tilt>
             <div class="card-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M3 5h18v12H3zM8 21h8M12 17v4"/></svg>
+              <svg viewBox="0 0 24 24"><path pathLength="1" d="M3 5h18v12H3zM8 21h8M12 17v4"/></svg>
             </div>
             <h3>Custom Website Design</h3>
             <p>A one-of-a-kind design built around your brand and your customers. No cookie-cutter templates.</p>
           </article>
-          <article class="card">
+          <article class="card" data-reveal data-tilt>
             <div class="card-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M7 2h10v20H7zM11 18h2"/></svg>
+              <svg viewBox="0 0 24 24"><path pathLength="1" d="M7 2h10v20H7zM11 18h2"/></svg>
             </div>
             <h3>Mobile-First Development</h3>
             <p>Your site looks and works beautifully on every phone, tablet and desktop.</p>
           </article>
-          <article class="card">
+          <article class="card" data-reveal data-tilt>
             <div class="card-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg>
+              <svg viewBox="0 0 24 24"><circle pathLength="1" cx="11" cy="11" r="7"/><path pathLength="1" d="M21 21l-5-5"/></svg>
             </div>
             <h3>SEO Foundations</h3>
             <p>Clean code, fast load times and smart structure so customers can find you on Google.</p>
           </article>
-          <article class="card">
+          <article class="card" data-reveal data-tilt>
             <div class="card-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M3 3h2l3 12h11l2-8H6M9 20h.01M18 20h.01"/></svg>
+              <svg viewBox="0 0 24 24"><path pathLength="1" d="M3 3h2l3 12h11l2-8H6M9 20h.01M18 20h.01"/></svg>
             </div>
             <h3>E-Commerce</h3>
             <p>Online stores that make buying easy, so you sell more with less effort.</p>
           </article>
-          <article class="card">
+          <article class="card" data-reveal data-tilt>
             <div class="card-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16zM14 6l3 3"/></svg>
+              <svg viewBox="0 0 24 24"><path pathLength="1" d="M4 20l4-1 11-11-3-3L5 16zM14 6l3 3"/></svg>
             </div>
             <h3>Redesigns</h3>
             <p>Give an outdated website a premium makeover that matches the quality of your business.</p>
           </article>
-          <article class="card">
+          <article class="card" data-reveal data-tilt>
             <div class="card-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>
+              <svg viewBox="0 0 24 24"><path pathLength="1" d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>
             </div>
             <h3>Care &amp; Maintenance</h3>
             <p>Updates, backups and support so your site stays secure, fast and current.</p>
@@ -105,57 +158,129 @@
       </div>
     </section>
 
-    <section class="section section-alt" id="process">
+    <section class="section manifesto">
       <div class="container">
-        <p class="eyebrow">How It Works</p>
-        <h2>From idea to launch in four steps</h2>
-        <ol class="grid steps">
-          <li class="step">
-            <span class="step-num">01</span>
-            <h3>Discover</h3>
-            <p>We learn about your business, your goals and your customers.</p>
-          </li>
-          <li class="step">
-            <span class="step-num">02</span>
-            <h3>Design</h3>
-            <p>You get a custom design to review. We refine it until it's exactly right.</p>
-          </li>
-          <li class="step">
-            <span class="step-num">03</span>
-            <h3>Develop</h3>
-            <p>We build your site with clean, fast, mobile-friendly code.</p>
-          </li>
-          <li class="step">
-            <span class="step-num">04</span>
-            <h3>Launch</h3>
-            <p>Your site goes live, and we stay on hand to support you as you grow.</p>
-          </li>
-        </ol>
+        <p class="manifesto-text" data-fill>Your website is the hardest-working member of your team. It never sleeps, never takes a day off, and makes a first impression every single second. <em>We make sure it&rsquo;s a brilliant one.</em></p>
+      </div>
+    </section>
+
+    <section class="process" id="process">
+      <div class="process-sticky">
+        <div class="container process-grid">
+          <div class="process-head">
+            <p class="eyebrow">How It Works</p>
+            <h2 data-split>From idea to launch in four steps</h2>
+          </div>
+
+          <ol class="psteps">
+            <li class="pstep is-active">
+              <span class="pstep-num">01</span>
+              <div class="pstep-body">
+                <h3>Discover</h3>
+                <p>We learn about your business, your goals and your customers.</p>
+              </div>
+            </li>
+            <li class="pstep is-active">
+              <span class="pstep-num">02</span>
+              <div class="pstep-body">
+                <h3>Design</h3>
+                <p>You get a custom design to review. We refine it until it&rsquo;s exactly right.</p>
+              </div>
+            </li>
+            <li class="pstep is-active">
+              <span class="pstep-num">03</span>
+              <div class="pstep-body">
+                <h3>Develop</h3>
+                <p>We build your site with clean, fast, mobile-friendly code.</p>
+              </div>
+            </li>
+            <li class="pstep is-active">
+              <span class="pstep-num">04</span>
+              <div class="pstep-body">
+                <h3>Launch</h3>
+                <p>Your site goes live, and we stay on hand to support you as you grow.</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="process-visual" aria-hidden="true">
+            <div class="browser" data-stage="4">
+              <div class="browser-bar">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span class="url">
+                  <svg viewBox="0 0 24 24"><path d="M6 11V8a6 6 0 0112 0v3M5 11h14v10H5z"/></svg>
+                  yourbusiness.com
+                </span>
+                <span class="live">Live</span>
+              </div>
+              <div class="browser-body">
+                <div class="mock">
+                  <div class="m-nav">
+                    <b class="mk m-logo" style="--k:0"></b>
+                    <i class="mk" style="--k:1"></i><i class="mk" style="--k:2"></i><i class="mk" style="--k:3"></i>
+                    <b class="mk m-btn" style="--k:4"></b>
+                  </div>
+                  <div class="m-hero">
+                    <div class="mk m-title" style="--k:5"></div>
+                    <div class="mk m-title short" style="--k:6"></div>
+                    <div class="mk m-text" style="--k:7"></div>
+                    <div class="mk m-cta" style="--k:8"></div>
+                  </div>
+                  <div class="m-cards">
+                    <div class="mk" style="--k:9"></div>
+                    <div class="mk" style="--k:10"></div>
+                    <div class="mk" style="--k:11"></div>
+                  </div>
+                </div>
+                <div class="notes">
+                  <span style="--x:7%;--y:14%;--r:-4deg;--n:0">Your goals</span>
+                  <span style="--x:50%;--y:9%;--r:3deg;--n:1">Your customers</span>
+                  <span style="--x:16%;--y:56%;--r:2deg;--n:2">Your brand</span>
+                  <span style="--x:54%;--y:60%;--r:-3deg;--n:3">Your competition</span>
+                </div>
+                <div class="code">
+                  <em>index.html</em>
+                  <i style="--w:60%;--n:0"></i>
+                  <i class="g" style="--w:85%;--n:1"></i>
+                  <i style="--w:45%;--n:2"></i>
+                  <i style="--w:72%;--n:3"></i>
+                  <i class="g" style="--w:55%;--n:4"></i>
+                  <i style="--w:35%;--n:5"></i>
+                </div>
+                <div class="sparks">
+                  <i style="--n:0"></i><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i>
+                  <i style="--n:4"></i><i style="--n:5"></i><i style="--n:6"></i><i style="--n:7"></i>
+                  <i style="--n:8"></i><i style="--n:9"></i><i style="--n:10"></i><i style="--n:11"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="section" id="why">
       <div class="container why">
         <div class="why-text">
-          <p class="eyebrow">Why Aurum</p>
-          <h2>Gold doesn't tarnish. Neither should your website.</h2>
-          <p>Your website is often the first impression customers have of your business. We make sure it's a great one, with a site that looks premium, works perfectly and keeps bringing in business for years.</p>
-          <a href="#contact" class="btn">Let's Talk</a>
+          <p class="eyebrow" data-reveal>Why Aurum</p>
+          <h2 data-split>Gold doesn&rsquo;t tarnish. Neither should your website.</h2>
+          <p data-reveal>Your website is often the first impression customers have of your business. We make sure it&rsquo;s a great one, with a site that looks premium, works perfectly and keeps bringing in business for years.</p>
+          <div data-reveal><a href="#contact" class="btn" data-magnetic>Let&rsquo;s Talk</a></div>
         </div>
-        <ul class="why-list">
-          <li>
+        <ul class="why-list" data-stagger>
+          <li data-reveal="right">
             <h3>Personal service</h3>
             <p>You work directly with the person building your site. No middlemen, no runaround.</p>
           </li>
-          <li>
+          <li data-reveal="right">
             <h3>Clear pricing</h3>
-            <p>Know exactly what you're paying for before we start. No surprise fees.</p>
+            <p>Know exactly what you&rsquo;re paying for before we start. No surprise fees.</p>
           </li>
-          <li>
+          <li data-reveal="right">
             <h3>Built for results</h3>
             <p>Every design choice is made to win trust and turn visitors into customers.</p>
           </li>
-          <li>
+          <li data-reveal="right">
             <h3>Yours to keep</h3>
             <p>You own your website and your content, start to finish.</p>
           </li>
@@ -164,16 +289,24 @@
     </section>
 
     <section class="section section-alt cta" id="contact">
+      <div class="cta-glow" aria-hidden="true"></div>
       <div class="container contact">
         <div class="contact-text">
-          <p class="eyebrow">Get in Touch</p>
-          <h2>Ready for a website that shines?</h2>
-          <p>Tell us a little about your project and we'll get back to you with ideas and a free quote.</p>
-          <p class="contact-email">
-            <a href="mailto:elijahnisenbaum1@gmail.com">elijahnisenbaum1@gmail.com</a>
-          </p>
+          <p class="eyebrow" data-reveal>Get in Touch</p>
+          <h2 data-split>Ready for a website that shines?</h2>
+          <p data-reveal>Tell us a little about your project and we&rsquo;ll get back to you with ideas and a free quote.</p>
+          <div class="contact-links" data-stagger>
+            <a class="contact-link" data-reveal href="https://wa.me/19147481692?text=Hi%20Aurum%20Web%20Design%2C%20I%27d%20like%20to%20talk%20about%20a%20website." target="_blank" rel="noopener">
+              <span class="contact-link-icon wa"><svg><use href="#wa"/></svg></span>
+              <span><small>WhatsApp</small>(914) 748-1692</span>
+            </a>
+            <a class="contact-link" data-reveal href="mailto:elijahnisenbaum1@gmail.com">
+              <span class="contact-link-icon"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 7l9 6 9-6"/></svg></span>
+              <span><small>Email</small>elijahnisenbaum1@gmail.com</span>
+            </a>
+          </div>
         </div>
-        <form class="contact-form" id="contact-form" novalidate>
+        <form class="contact-form" id="contact-form" data-reveal novalidate>
           <label>
             <span>Name</span>
             <input type="text" name="name" autocomplete="name" required>
@@ -190,7 +323,10 @@
             <span>Tell us about your project</span>
             <textarea name="message" rows="4" required></textarea>
           </label>
-          <button type="submit" class="btn btn-block">Send Message</button>
+          <div class="form-actions">
+            <button type="submit" class="btn" data-via="whatsapp"><svg class="btn-icon"><use href="#wa"/></svg>Send on WhatsApp</button>
+            <button type="submit" class="btn btn-ghost" data-via="email">Send by Email</button>
+          </div>
           <p class="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -198,6 +334,9 @@
   </main>
 
   <footer class="footer">
+    <div class="wordmark" aria-hidden="true">
+      <span style="--i:0">A</span><span style="--i:1">U</span><span style="--i:2">R</span><span style="--i:3">U</span><span style="--i:4">M</span>
+    </div>
     <div class="container footer-inner">
       <a href="#top" class="logo" aria-label="Back to top">
         <span class="logo-mark">Au</span>
@@ -206,6 +345,11 @@
       <p>&copy; <span id="year">2026</span> Aurum Web Design. The gold standard in web design.</p>
     </div>
   </footer>
+
+  <a class="wa-fab" href="https://wa.me/19147481692?text=Hi%20Aurum%20Web%20Design%2C%20I%27d%20like%20to%20talk%20about%20a%20website." target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+    <svg><use href="#wa"/></svg>
+    <span>Chat on WhatsApp</span>
+  </a>
 
   <script src="script.js"></script>
 </body>

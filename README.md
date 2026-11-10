@@ -8,7 +8,7 @@ Website for **Aurum Web Design** (aurumwebdesign.com). "Aurum" is Latin for gold
 
 - `index.html`: the page content
 - `styles.css`: colors, fonts and layout (gold and black theme)
-- `script.js`: mobile menu, scroll animations and contact form
+- `script.js`: animations, mobile menu and contact form
 - `favicon.svg`: the "Au" browser-tab icon
 
 ## Run it locally
@@ -24,6 +24,8 @@ Then visit http://localhost:8000.
 ## Customizing
 
 - **Contact email:** change `elijahnisenbaum1@gmail.com` in `index.html` and in `CONTACT_EMAIL` in `script.js`.
+- **WhatsApp number:** change `19147481692` in `index.html` (two links) and in `WHATSAPP_NUMBER` in `script.js`. The leading `1` is the US country code.
+- **Animations:** they switch off automatically for visitors who have "reduce motion" turned on, and the opening animation plays once per visit.
 - **Colors:** edit the variables at the top of `styles.css` (`--gold`, `--bg`, and so on).
 
 ## Deploying
