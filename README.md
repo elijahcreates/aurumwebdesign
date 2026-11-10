@@ -23,7 +23,7 @@ Then visit http://localhost:8000.
 
 ## Customizing
 
-- **Contact email:** change `hello@aurumwebdesign.com` in `index.html` and in `CONTACT_EMAIL` in `script.js`.
+- **Contact email:** change `elijahnisenbaum1@gmail.com` in `index.html` and in `CONTACT_EMAIL` in `script.js`.
 - **Colors:** edit the variables at the top of `styles.css` (`--gold`, `--bg`, and so on).
 
 ## Deploying

@@ -44,7 +44,7 @@ if ("IntersectionObserver" in window) {
 // set the form's action/method instead.
 const form = document.getElementById("contact-form");
 const status = form.querySelector(".form-status");
-const CONTACT_EMAIL = "hello@aurumwebdesign.com";
+const CONTACT_EMAIL = "elijahnisenbaum1@gmail.com";
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
