@@ -967,17 +967,18 @@ h1 em {
 .svc:hover .svc-arrow { opacity: 1; translate: 0 0; }
 
 /* ---------- Handwritten touches ---------- */
-.offer-amount-wrap { position: relative; display: inline-block; }
+.offer-amount-wrap { display: flex; align-items: flex-start; gap: 0.4rem; }
+/* The note sits in its own box beside the price, so it can never cover other text. */
 .scribble {
-  position: absolute;
-  left: 100%;
-  top: 4%;
-  width: 150px;
-  margin-left: 0.4rem;
+  position: relative;
+  flex: none;
+  width: 170px;
+  height: 66px;
+  margin-top: 0.5rem;
   rotate: -5deg;
   pointer-events: none;
 }
-.scribble svg { width: 92px; overflow: visible; }
+.scribble svg { position: absolute; left: 0; top: 18px; width: 92px; height: 46px; max-width: none; overflow: visible; }
 .scribble path {
   fill: none;
   stroke: var(--gold-light);
@@ -986,8 +987,9 @@ h1 em {
   stroke-linejoin: round;
 }
 .scribble em {
-  display: block;
-  margin: -64px 0 0 76px;
+  position: absolute;
+  left: 78px;
+  top: 0;
   font-family: var(--hand);
   font-size: 1.9rem;
   font-style: normal;
@@ -1545,9 +1547,9 @@ h1 em {
   .svc { grid-template-columns: 2.4rem minmax(0, 1fr); gap: 0.4rem 0.8rem; padding: 1.5rem 0.2rem; }
   .svc p { grid-column: 2; }
   .svc-arrow { display: none; }
-  .scribble { top: 22%; width: 130px; margin-left: 0.2rem; }
-  .scribble svg { width: 52px; }
-  .scribble em { margin: -40px 0 0 42px; font-size: 1.25rem; }
+  .scribble { width: 128px; height: 42px; margin-top: 1.4rem; }
+  .scribble svg { top: 14px; width: 52px; height: 26px; }
+  .scribble em { left: 43px; font-size: 1.25rem; }
   .compare { aspect-ratio: 4 / 3.3; }
   .old, .new { font-size: clamp(8px, 2.7cqw, 18px); }
   .cmp-label { bottom: 10px; font-size: 0.6rem; }
@@ -1562,4 +1564,9 @@ h1 em {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* Very narrow phones: no room beside the price, so the note is left out. */
+@media (max-width: 374px) {
+  .scribble { display: none; }
 }
