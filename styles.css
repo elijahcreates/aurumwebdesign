@@ -1547,7 +1547,7 @@ h1 em {
   .svc { grid-template-columns: 2.4rem minmax(0, 1fr); gap: 0.4rem 0.8rem; padding: 1.5rem 0.2rem; }
   .svc p { grid-column: 2; }
   .svc-arrow { display: none; }
-  .scribble { width: 128px; height: 42px; margin-top: 1.4rem; }
+  .scribble { width: 128px; height: 42px; margin-top: 0.55rem; }
   .scribble svg { top: 14px; width: 52px; height: 26px; }
   .scribble em { left: 43px; font-size: 1.25rem; }
   .compare { aspect-ratio: 4 / 3.3; }
