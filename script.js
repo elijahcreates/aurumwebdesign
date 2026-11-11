@@ -419,7 +419,7 @@
         window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
         status.textContent = "Thanks! Your email app should open with your message ready to send.";
       } else {
-        const text = ["Hi Aurum Web Design, I'd like to talk about a website.", "", ...lines].join("\n");
+        const text = ["Hi Aurum Web Design, I'd like a quote for a website.", "", ...lines].join("\n");
         window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
         status.textContent = "Thanks! WhatsApp should open with your message ready to send.";
       }
