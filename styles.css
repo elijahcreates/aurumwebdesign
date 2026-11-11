@@ -967,42 +967,47 @@ h1 em {
 .svc:hover .svc-arrow { opacity: 1; translate: 0 0; }
 
 /* ---------- Handwritten touches ---------- */
-.offer-amount-wrap { display: flex; align-items: flex-start; gap: 0.4rem; }
-/* The note sits in its own box beside the price, so it can never cover other text. */
+.offer-amount-wrap {
+  --amt: clamp(6.5rem, 18vw, 13rem); /* same size as the price, used to scale the note */
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+/* Handwritten note: one drawing (arrow + words) sized from the price, sitting to its right.
+   The arrowhead lands beside the upper-right of the 9 at every screen size. */
 .scribble {
-  position: relative;
+  --sw: min(200px, calc(var(--amt) * 0.9));
   flex: none;
-  width: 170px;
-  height: 66px;
-  margin: -0.4rem 0 0 -0.5rem;
-  rotate: -5deg;
+  width: var(--sw);
+  margin-top: calc(var(--amt) * 0.22 - var(--sw) * 0.3);
   pointer-events: none;
 }
-.scribble svg { position: absolute; left: 0; top: 18px; width: 92px; height: 46px; max-width: none; overflow: visible; }
+.scribble svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 200 / 80;
+  max-width: none;
+  overflow: visible;
+}
 .scribble path {
   fill: none;
   stroke: var(--gold-light);
-  stroke-width: 2.2;
+  stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.scribble em {
-  position: absolute;
-  left: 78px;
-  top: 0;
+.scribble text {
   font-family: var(--hand);
-  font-size: 1.9rem;
-  font-style: normal;
+  font-size: 30px;
   font-weight: 600;
-  line-height: 1;
-  color: var(--gold-light);
-  white-space: nowrap;
+  fill: var(--gold-light);
 }
 .motion .scribble path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.9s var(--ease-io) 1.5s; }
 .motion .scribble path + path { transition-delay: 2.2s; }
-.motion .scribble em { opacity: 0; transition: opacity 0.6s 1.2s; }
+.motion .scribble text { opacity: 0; transition: opacity 0.6s 1.2s; }
 .motion .in .scribble path { stroke-dashoffset: 0; }
-.motion .in .scribble em { opacity: 1; }
+.motion .in .scribble text { opacity: 1; }
 
 .note { margin: 0 0 2.2rem; padding-left: 1.4rem; border-left: 1px solid var(--gold); }
 .note blockquote {
@@ -1500,6 +1505,7 @@ h1 em {
   .why, .contact, .offer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .offer-glow { left: 50%; top: 30%; }
   .sec-head { grid-template-columns: 1fr; gap: 1.2rem; margin-bottom: 2.2rem; }
+  .scribble { --sw: clamp(138px, calc(100vw - 222px), 200px); }
   .motion [data-reveal="right"] { translate: 0 44px; }
 
   .process-grid {
@@ -1547,9 +1553,6 @@ h1 em {
   .svc { grid-template-columns: 2.4rem minmax(0, 1fr); gap: 0.4rem 0.8rem; padding: 1.5rem 0.2rem; }
   .svc p { grid-column: 2; }
   .svc-arrow { display: none; }
-  .scribble { width: 128px; height: 42px; margin: -0.35rem 0 0 -8px; }
-  .scribble svg { top: 14px; width: 52px; height: 26px; }
-  .scribble em { left: 43px; font-size: 1.25rem; }
   .compare { aspect-ratio: 4 / 3.3; }
   .old, .new { font-size: clamp(8px, 2.7cqw, 18px); }
   .cmp-label { bottom: 10px; font-size: 0.6rem; }
@@ -1567,6 +1570,6 @@ h1 em {
 }
 
 /* Very narrow phones: no room beside the price, so the note is left out. */
-@media (max-width: 374px) {
+@media (max-width: 359px) {
   .scribble { display: none; }
 }
