@@ -373,7 +373,7 @@
       ty = e.clientY;
       if (!started) { started = true; x = tx; y = ty; }
       ring.classList.add("on");
-      ring.classList.toggle("hover", Boolean(e.target.closest && e.target.closest("a, button, .card, .pstep, input, textarea")));
+      ring.classList.toggle("hover", Boolean(e.target.closest && e.target.closest("a, button, summary, .card, .pstep, .compare, input, textarea")));
       if (!running) { running = true; requestAnimationFrame(tick); }
     }, { passive: true });
     document.addEventListener("pointerleave", () => ring.classList.remove("on"));
@@ -383,7 +383,67 @@
   safely(() => {
     const fab = $(".wa-fab");
     if (!fab) return;
-    scrollTasks.push((y) => fab.classList.toggle("show", y > 240));
+    let peeked = false;
+    scrollTasks.push((y) => {
+      fab.classList.toggle("show", y > 240);
+      // Open the label once, briefly, so visitors notice they can ask for a quote.
+      if (!peeked && y > 900) {
+        peeked = true;
+        fab.classList.add("peek");
+        setTimeout(() => fab.classList.remove("peek"), 5000);
+      }
+    });
+  });
+
+  /* ---------- Price counts up when it scrolls into view ---------- */
+  safely(() => {
+    if (!motion || !("IntersectionObserver" in window)) return;
+    $$("[data-count]").forEach((el) => {
+      const target = Number(el.dataset.count);
+      el.textContent = "0";
+      const observer = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        observer.disconnect();
+        const start = performance.now();
+        const duration = 1800;
+        const step = (now) => {
+          const t = clamp((now - start) / duration, 0, 1);
+          el.textContent = String(Math.round(target * (1 - Math.pow(1 - t, 4))));
+          if (t < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }, { threshold: 0.6 });
+      observer.observe(el);
+    });
+  });
+
+  /* ---------- Before / after slider ---------- */
+  safely(() => {
+    const compare = $(".compare");
+    if (!compare) return;
+    const input = $("input", compare);
+    let touched = false;
+    const set = (value) => compare.style.setProperty("--pos", `${value}%`);
+    input.addEventListener("input", () => { touched = true; set(input.value); });
+    set(input.value);
+
+    // A short sweep the first time it appears, to show that it moves.
+    if (!motion || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      observer.disconnect();
+      const start = performance.now() + 500;
+      const duration = 2400;
+      const step = (now) => {
+        if (touched) return;
+        const t = clamp((now - start) / duration, 0, 1);
+        const value = 50 + 26 * Math.sin(t * Math.PI * 2) * (1 - t * 0.35);
+        set(t < 1 ? value : 50);
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, { threshold: 0.5 });
+    observer.observe(compare);
   });
 
   /* ---------- Contact form: sends through WhatsApp or the visitor's email app ---------- */
