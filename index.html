@@ -48,7 +48,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Instrument+Sans:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -66,8 +66,6 @@
     </div>
   </div>
 
-  <div class="grain" aria-hidden="true"></div>
-  <div class="cursor" aria-hidden="true"></div>
 
   <header class="nav" id="top">
     <div class="container nav-inner">
@@ -92,7 +90,6 @@
   <main>
     <section class="hero">
       <div class="hero-glow" aria-hidden="true"></div>
-      <canvas class="hero-canvas" aria-hidden="true"></canvas>
       <div class="container hero-inner">
         <p class="eyebrow">Now Booking New Projects</p>
         <h1>
@@ -102,8 +99,8 @@
         <p class="lead">Websites for small businesses that deserve to look as good online as they are in person. Designed from scratch, priced up front, ready in days.</p>
         <p class="hero-price">Websites start at <strong>$229</strong></p>
         <div class="hero-actions">
-          <a href="#contact" class="btn" data-magnetic>Start Your Project</a>
-          <a href="#services" class="btn btn-ghost" data-magnetic>See What We Do</a>
+          <a href="#contact" class="btn">Start Your Project</a>
+          <a href="#services" class="btn btn-ghost">See What We Do</a>
         </div>
         <ul class="hero-points">
           <li>Most sites ready in 2&ndash;4 business days</li>
@@ -179,7 +176,6 @@
     </section>
 
     <section class="section section-alt offer" id="pricing">
-      <div class="offer-glow" aria-hidden="true"></div>
       <div class="container offer-grid">
         <div class="offer-price" data-reveal>
           <p class="eyebrow"><span class="idx">02</span>Simple Pricing</p>
@@ -191,7 +187,7 @@
             </span>
           </div>
           <p class="offer-note">You get a free quote first, so you know the exact price before any work begins.</p>
-          <a href="https://wa.me/19147481692?text=Hi%20Aurum%20Web%20Design%2C%20I%27d%20like%20a%20quote%20for%20a%20website." target="_blank" rel="noopener" class="btn btn-large" data-magnetic><svg class="btn-icon"><use href="#wa"/></svg>WhatsApp for a Free Quote</a>
+          <a href="https://wa.me/19147481692?text=Hi%20Aurum%20Web%20Design%2C%20I%27d%20like%20a%20quote%20for%20a%20website." target="_blank" rel="noopener" class="btn btn-large"><svg class="btn-icon"><use href="#wa"/></svg>WhatsApp for a Free Quote</a>
           <p class="offer-small">Free quote &middot; No obligation &middot; Most sites ready in 2&ndash;4 business days</p>
         </div>
         <div>
@@ -207,7 +203,7 @@
       </div>
     </section>
 
-    <section class="section manifesto">
+    <section class="section section-paper manifesto">
       <div class="container">
         <p class="manifesto-text" data-fill>Your website is the hardest-working member of your team. It never sleeps, never takes a day off, and makes a first impression every single second. <em>We make sure it&rsquo;s a brilliant one.</em></p>
       </div>
@@ -296,11 +292,6 @@
                   <i class="g" style="--w:55%;--n:4"></i>
                   <i style="--w:35%;--n:5"></i>
                 </div>
-                <div class="sparks">
-                  <i style="--n:0"></i><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i>
-                  <i style="--n:4"></i><i style="--n:5"></i><i style="--n:6"></i><i style="--n:7"></i>
-                  <i style="--n:8"></i><i style="--n:9"></i><i style="--n:10"></i><i style="--n:11"></i>
-                </div>
               </div>
             </div>
           </div>
@@ -361,7 +352,7 @@
             <blockquote>When you message Aurum, you&rsquo;re talking to me, the person who builds your site. No sales team and no runaround. Tell me what your business needs and I&rsquo;ll tell you honestly what it will cost.</blockquote>
             <figcaption><span class="sig">Elijah</span><small>Founder, Aurum Web Design</small></figcaption>
           </figure>
-          <div data-reveal><a href="#contact" class="btn" data-magnetic>Let&rsquo;s Talk</a></div>
+          <div data-reveal><a href="#contact" class="btn">Let&rsquo;s Talk</a></div>
         </div>
         <ul class="why-list" data-stagger>
           <li data-reveal="right">
@@ -384,9 +375,9 @@
       </div>
     </section>
 
-    <section class="section" id="faq">
+    <section class="section section-paper" id="faq">
       <div class="container faq">
-        <div class="center-head">
+        <div class="faq-head">
           <p class="eyebrow" data-reveal><span class="idx">06</span>Good Questions</p>
           <h2 data-split>Everything you want to know first</h2>
         </div>
@@ -420,14 +411,13 @@
     </section>
 
     <section class="section section-alt cta" id="contact">
-      <div class="cta-glow" aria-hidden="true"></div>
       <div class="container contact">
         <div class="contact-text">
           <p class="eyebrow" data-reveal><span class="idx">07</span>Get in Touch</p>
           <h2 data-split>Ready for a website that shines?</h2>
           <p data-reveal><strong>Websites start at $229.</strong> WhatsApp us for a free quote on yours, or send the form and we&rsquo;ll get back to you with ideas.</p>
           <div data-reveal>
-            <a class="btn-chat" href="https://wa.me/19147481692" target="_blank" rel="noopener" data-magnetic>
+            <a class="btn-chat" href="https://wa.me/19147481692" target="_blank" rel="noopener">
               <svg class="btn-chat-icon" aria-hidden="true"><use href="#wa"/></svg>
               <span>Chat with us on WhatsApp</span>
               <svg class="btn-chat-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>

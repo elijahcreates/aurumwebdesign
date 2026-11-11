@@ -119,93 +119,6 @@
     targets.forEach((el) => observer.observe(el));
   });
 
-  /* ---------- Hero: gold dust ---------- */
-  safely(() => {
-    const canvas = $(".hero-canvas");
-    if (!motion || !canvas || !canvas.getContext) return;
-    const ctx = canvas.getContext("2d");
-    const hero = $(".hero");
-    let w = 0, h = 0, particles = [], running = false, visible = true;
-    let targetX = 0, targetY = 0, mx = 0, my = 0;
-
-    const makeParticle = () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      r: Math.random() * 1.5 + 0.4,
-      vx: (Math.random() - 0.5) * 0.12,
-      vy: -(Math.random() * 0.28 + 0.06),
-      alpha: Math.random() * 0.55 + 0.15,
-      phase: Math.random() * Math.PI * 2,
-      speed: Math.random() * 0.02 + 0.006,
-      depth: Math.random() * 0.8 + 0.2,
-    });
-
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = rect.width;
-      h = rect.height;
-      canvas.width = Math.round(w * dpr);
-      canvas.height = Math.round(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.round(clamp((w * h) / 13000, 28, 110));
-      particles = Array.from({ length: count }, makeParticle);
-    };
-
-    const frame = () => {
-      if (!running) return;
-      mx = lerp(mx, targetX, 0.05);
-      my = lerp(my, targetY, 0.05);
-      ctx.clearRect(0, 0, w, h);
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.phase += p.speed;
-        if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
-        if (p.x < -10) p.x = w + 10;
-        if (p.x > w + 10) p.x = -10;
-        const alpha = p.alpha * (0.55 + 0.45 * Math.sin(p.phase));
-        const x = p.x + mx * p.depth * 22;
-        const y = p.y + my * p.depth * 22;
-        ctx.fillStyle = `rgba(245, 217, 139, ${(alpha * 0.16).toFixed(3)})`;
-        ctx.beginPath();
-        ctx.arc(x, y, p.r * 3.2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = `rgba(245, 217, 139, ${alpha.toFixed(3)})`;
-        ctx.beginPath();
-        ctx.arc(x, y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      requestAnimationFrame(frame);
-    };
-
-    const update = () => {
-      const shouldRun = visible && !document.hidden;
-      if (shouldRun && !running) { running = true; requestAnimationFrame(frame); }
-      else if (!shouldRun) running = false;
-    };
-
-    resize();
-    window.addEventListener("resize", resize);
-    document.addEventListener("visibilitychange", update);
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; update(); }).observe(hero);
-    }
-    update();
-
-    // The dust and the glow drift gently with the mouse.
-    if (finePointer) {
-      const glow = $(".hero-glow");
-      hero.addEventListener("pointermove", (e) => {
-        const rect = hero.getBoundingClientRect();
-        targetX = (e.clientX - rect.left) / rect.width - 0.5;
-        targetY = (e.clientY - rect.top) / rect.height - 0.5;
-        glow.style.setProperty("--gx", `${(targetX * 90).toFixed(1)}px`);
-        glow.style.setProperty("--gy", `${(targetY * 60).toFixed(1)}px`);
-      });
-    }
-  });
-
   /* ---------- Hero: content drifts away as you scroll ---------- */
   safely(() => {
     if (!motion) return;
@@ -244,7 +157,7 @@
       lastY = y;
       x -= (55 + Math.abs(velocity) * 28) * dt;
       if (x <= -setWidth) x += setWidth;
-      const skew = clamp(velocity * -0.35, -9, 9);
+      const skew = clamp(velocity * -0.2, -3, 3);
       track.style.transform = `translate3d(${x.toFixed(2)}px, 0, 0) skewX(${skew.toFixed(2)}deg)`;
       requestAnimationFrame(tick);
     };
@@ -315,68 +228,6 @@
         window.scrollTo({ top: top + scrollRange() * ((i + 0.5) / steps.length), behavior: "smooth" });
       });
     });
-  });
-
-  /* ---------- Cards: 3D tilt and a spotlight that follows the cursor ---------- */
-  safely(() => {
-    if (!motion || !finePointer) return;
-    $$("[data-tilt]").forEach((card) => {
-      card.addEventListener("pointermove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const px = (e.clientX - rect.left) / rect.width;
-        const py = (e.clientY - rect.top) / rect.height;
-        card.classList.add("tilting");
-        card.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
-        card.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
-        card.style.setProperty("--ry", `${((px - 0.5) * 10).toFixed(2)}deg`);
-        card.style.setProperty("--rx", `${((0.5 - py) * 10).toFixed(2)}deg`);
-      });
-      card.addEventListener("pointerleave", () => {
-        card.classList.remove("tilting");
-        card.style.setProperty("--rx", "0deg");
-        card.style.setProperty("--ry", "0deg");
-      });
-    });
-  });
-
-  /* ---------- Magnetic buttons ---------- */
-  safely(() => {
-    if (!motion || !finePointer) return;
-    $$("[data-magnetic]").forEach((btn) => {
-      btn.addEventListener("pointermove", (e) => {
-        const rect = btn.getBoundingClientRect();
-        const dx = e.clientX - (rect.left + rect.width / 2);
-        const dy = e.clientY - (rect.top + rect.height / 2);
-        btn.style.translate = `${(dx * 0.28).toFixed(1)}px ${(dy * 0.4).toFixed(1)}px`;
-      });
-      btn.addEventListener("pointerleave", () => { btn.style.translate = ""; });
-    });
-  });
-
-  /* ---------- Cursor ring ---------- */
-  safely(() => {
-    const ring = $(".cursor");
-    if (!ring) return;
-    if (!motion || !finePointer) { ring.remove(); return; }
-    let x = 0, y = 0, tx = 0, ty = 0, started = false, running = false;
-    const tick = () => {
-      x = lerp(x, tx, 0.2);
-      y = lerp(y, ty, 0.2);
-      ring.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
-      if (Math.abs(tx - x) + Math.abs(ty - y) > 0.2) requestAnimationFrame(tick);
-      else running = false;
-    };
-    window.addEventListener("pointermove", (e) => {
-      if (e.pointerType && e.pointerType !== "mouse") return;
-      if (e.clientX === 0 && e.clientY === 0) return;
-      tx = e.clientX;
-      ty = e.clientY;
-      if (!started) { started = true; x = tx; y = ty; }
-      ring.classList.add("on");
-      ring.classList.toggle("hover", Boolean(e.target.closest && e.target.closest("a, button, summary, .svc, .pstep, .compare, input, textarea")));
-      if (!running) { running = true; requestAnimationFrame(tick); }
-    }, { passive: true });
-    document.addEventListener("pointerleave", () => ring.classList.remove("on"));
   });
 
   /* ---------- Floating WhatsApp button appears after the first scroll ---------- */
