@@ -12,6 +12,7 @@
   --wa: #25d366;
   --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --hand: "Caveat", "Segoe Script", "Bradley Hand", cursive;
   --radius: 14px;
   --max: 1160px;
   /* A soft light that fades out gradually, so no edge is visible. */
@@ -904,6 +905,124 @@ h1 em {
   100% { opacity: 0; transform: rotate(calc(var(--n) * 30deg)) translateX(clamp(90px, 16vw, 210px)) scale(0.2); }
 }
 
+/* ---------- Small editorial details ---------- */
+.eyebrow .idx {
+  margin-right: 0.9em;
+  font-family: var(--serif);
+  font-size: 1.3em;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--gold-light);
+}
+.sec-head {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 3rem;
+  align-items: end;
+  margin-bottom: 3rem;
+}
+.sec-head h2, .sec-head .section-lead { margin-bottom: 0; }
+
+/* ---------- Services list ---------- */
+.svc-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.svc {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) minmax(0, 1.2fr) 2.5rem;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 1.9rem 1rem;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.svc::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(212, 168, 67, 0.11), transparent 72%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s var(--ease);
+}
+.svc:hover::before { transform: scaleX(1); }
+.svc > * { position: relative; }
+.svc-num { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--gold); }
+.svc h3 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  font-weight: 500;
+  transition: translate 0.6s var(--ease), color 0.3s;
+}
+.svc:hover h3 { translate: 0.6rem 0; color: var(--gold-light); font-style: italic; }
+.svc p { margin: 0; color: var(--muted); }
+.svc-arrow {
+  justify-self: end;
+  font-size: 1.4rem;
+  color: var(--gold);
+  opacity: 0;
+  translate: -14px 0;
+  transition: opacity 0.4s, translate 0.6s var(--ease);
+}
+.svc:hover .svc-arrow { opacity: 1; translate: 0 0; }
+
+/* ---------- Handwritten touches ---------- */
+.offer-amount-wrap { position: relative; display: inline-block; }
+.scribble {
+  position: absolute;
+  left: 100%;
+  top: 4%;
+  width: 150px;
+  margin-left: 0.4rem;
+  rotate: -5deg;
+  pointer-events: none;
+}
+.scribble svg { width: 92px; overflow: visible; }
+.scribble path {
+  fill: none;
+  stroke: var(--gold-light);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.scribble em {
+  display: block;
+  margin: -64px 0 0 76px;
+  font-family: var(--hand);
+  font-size: 1.9rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--gold-light);
+  white-space: nowrap;
+}
+.motion .scribble path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.9s var(--ease-io) 1.5s; }
+.motion .scribble path + path { transition-delay: 2.2s; }
+.motion .scribble em { opacity: 0; transition: opacity 0.6s 1.2s; }
+.motion .in .scribble path { stroke-dashoffset: 0; }
+.motion .in .scribble em { opacity: 1; }
+
+.note { margin: 0 0 2.2rem; padding-left: 1.4rem; border-left: 1px solid var(--gold); }
+.note blockquote {
+  margin: 0 0 1.1rem;
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.35;
+}
+.note figcaption { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+.note .sig {
+  display: inline-block;
+  rotate: -4deg;
+  font-family: var(--hand);
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--gold-light);
+}
+.note small { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
 /* ---------- Pricing offer ---------- */
 .offer { overflow: hidden; }
 .offer-glow {
@@ -1378,6 +1497,7 @@ h1 em {
 @media (max-width: 860px) {
   .why, .contact, .offer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .offer-glow { left: 50%; top: 30%; }
+  .sec-head { grid-template-columns: 1fr; gap: 1.2rem; margin-bottom: 2.2rem; }
   .motion [data-reveal="right"] { translate: 0 44px; }
 
   .process-grid {
@@ -1422,6 +1542,12 @@ h1 em {
   .card, .contact-form { padding: 1.5rem; }
   .form-actions { grid-template-columns: 1fr; }
   .contact-link { font-size: 1.1rem; }
+  .svc { grid-template-columns: 2.4rem minmax(0, 1fr); gap: 0.4rem 0.8rem; padding: 1.5rem 0.2rem; }
+  .svc p { grid-column: 2; }
+  .svc-arrow { display: none; }
+  .scribble { top: 22%; width: 130px; margin-left: 0.2rem; }
+  .scribble svg { width: 52px; }
+  .scribble em { margin: -40px 0 0 42px; font-size: 1.25rem; }
   .compare { aspect-ratio: 4 / 3.3; }
   .old, .new { font-size: clamp(8px, 2.7cqw, 18px); }
   .cmp-label { bottom: 10px; font-size: 0.6rem; }

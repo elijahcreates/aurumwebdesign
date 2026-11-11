@@ -373,7 +373,7 @@
       ty = e.clientY;
       if (!started) { started = true; x = tx; y = ty; }
       ring.classList.add("on");
-      ring.classList.toggle("hover", Boolean(e.target.closest && e.target.closest("a, button, summary, .card, .pstep, .compare, input, textarea")));
+      ring.classList.toggle("hover", Boolean(e.target.closest && e.target.closest("a, button, summary, .svc, .pstep, .compare, input, textarea")));
       if (!running) { running = true; requestAnimationFrame(tick); }
     }, { passive: true });
     document.addEventListener("pointerleave", () => ring.classList.remove("on"));
