@@ -447,7 +447,9 @@ h1 em {
   transition: translate 0.6s var(--ease), border-color 0.4s;
 }
 .frame-bar { display: flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-bottom: 1px solid var(--border); }
-.frame-bar i { width: 7px; height: 7px; border-radius: 50%; background: #3a362f; }
+.frame-bar i { width: 9px; height: 9px; border-radius: 50%; background: #ff5f57; }
+.frame-bar i:nth-child(2) { background: #febc2e; }
+.frame-bar i:nth-child(3) { background: #28c840; }
 .frame img, .frame-phone img { display: block; width: 100%; height: auto; }
 .frame-phone {
   position: absolute;
