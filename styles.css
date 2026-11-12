@@ -443,7 +443,6 @@ h1 em {
   right: -4%;
   bottom: -9%;
   width: 19%;
-  padding: 2.5% 0 1.45%; /* room above for the Dynamic Island, below for the home bar */
   border: 5px solid #0b0a08;
   border-radius: 18px;
   outline: 1px solid #3a362f;
@@ -462,7 +461,7 @@ h1 em {
   height: 8.4cqw;
   translate: -50% 0;
   border-radius: 99px;
-  background: #1c1b19;
+  background: #000;
 }
 /* Home bar */
 .frame-phone::after {
@@ -655,8 +654,9 @@ h1 em {
 .faq { display: grid; grid-template-columns: 4fr 7fr; gap: 4rem; align-items: start; }
 .faq-head { position: sticky; top: 104px; }
 .faq-head h2 { margin-bottom: 0; }
-.faq-list { border-top: 1px solid var(--border); }
-.faq-item { border-bottom: 1px solid var(--border); }
+.faq-list { display: grid; gap: 0.75rem; }
+.faq-item { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); transition: border-color 0.25s; }
+.faq-item:hover, .faq-item[open] { border-color: rgba(201, 162, 74, 0.55); }
 .faq-item summary {
   list-style: none;
   cursor: pointer;
@@ -664,7 +664,7 @@ h1 em {
   align-items: baseline;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1.35rem 0;
+  padding: 1.25rem 1.5rem;
   font-family: var(--serif);
   font-size: 1.45rem;
   font-weight: 600;
@@ -684,8 +684,8 @@ h1 em {
 }
 .faq-item summary:hover { color: var(--gold); }
 .faq-item[open] summary::after { rotate: 45deg; }
-.faq-item summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
-.faq-a { padding: 0 3rem 1.5rem 0; color: var(--muted); }
+.faq-item summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 10px; }
+.faq-a { padding: 0 3.5rem 1.4rem 1.5rem; color: var(--muted); }
 .faq-a p { margin: 0; max-width: 58ch; }
 .motion .faq-item[open] .faq-a { animation: faqIn 0.55s var(--ease); }
 @keyframes faqIn { from { opacity: 0; translate: 0 -8px; } }
@@ -851,15 +851,15 @@ h1 em {
   height: 54px;
   padding: 0 14px;
   border-radius: 999px;
-  background: var(--gold);
-  color: #15110a;
+  background: #25d366;
+  color: #fff;
   font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   transition: scale 0.6s var(--ease), opacity 0.4s, background-color 0.25s;
 }
-.wa-fab:hover { background: var(--text); }
+.wa-fab:hover { background: #1ebe5a; }
 .wa-fab svg { width: 26px; height: 26px; fill: currentColor; flex: none; }
 .wa-fab span {
   max-width: 0;
@@ -881,7 +881,7 @@ h1 em {
   .project, .project:nth-of-type(even) { grid-template-columns: 1fr; gap: 3.2rem; margin-top: 4.5rem; }
   .project:nth-of-type(even) .project-media { order: 0; }
   .project:nth-of-type(even) .frame-phone { left: auto; right: 4%; }
-  .frame-phone { right: 4%; bottom: -7%; width: 22%; padding: 2.9% 0 1.7%; border-width: 4px; border-radius: 14px; }
+  .frame-phone { right: 4%; bottom: -7%; width: 22%; border-width: 4px; border-radius: 14px; }
   .steps { grid-template-columns: 1fr 1fr; gap: 2.4rem 1.5rem; }
   .faq-head { position: static; }
   .sec-head { grid-template-columns: 1fr; gap: 1.2rem; margin-bottom: 2.2rem; }
@@ -915,8 +915,8 @@ h1 em {
   .hero-points li { padding: 0.85rem 0; border-bottom: 1px solid var(--border); }
   .form-actions { grid-template-columns: 1fr; }
   .contact-link { font-size: 1.1rem; }
-  .faq-item summary { font-size: 1.25rem; padding: 1.15rem 0; }
-  .faq-a { padding: 0 0 1.3rem; }
+  .faq-item summary { font-size: 1.25rem; padding: 1.05rem 1.15rem; }
+  .faq-a { padding: 0 1.15rem 1.2rem; }
   .why-list { grid-template-columns: 1fr; gap: 2rem; }
   .offer-list li { font-size: 1.2rem; }
   .btn-chat { font-size: 0.74rem; letter-spacing: 0.1em; padding: 0.9rem 1.1rem; }
