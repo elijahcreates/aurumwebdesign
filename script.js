@@ -154,19 +154,32 @@
     if (!motion || !("IntersectionObserver" in window)) return;
     $$("[data-count]").forEach((el) => {
       const target = Number(el.dataset.count);
-      el.textContent = "0";
+      if (!Number.isFinite(target)) return;
+      // A hidden copy of the final number keeps the width fixed while the visible one counts.
+      const ghost = document.createElement("span");
+      ghost.className = "count-ghost";
+      ghost.setAttribute("aria-hidden", "true");
+      ghost.textContent = String(target);
+      const live = document.createElement("span");
+      live.className = "count-live";
+      live.textContent = "0";
+      el.classList.add("count");
+      el.setAttribute("aria-label", String(target));
+      el.textContent = "";
+      el.append(ghost, live);
+
       const observer = new IntersectionObserver((entries) => {
         if (!entries[0].isIntersecting) return;
         observer.disconnect();
-        const start = performance.now();
-        const duration = 1800;
+        const start = performance.now() + 250;
+        const duration = 1400;
         const step = (now) => {
           const t = clamp((now - start) / duration, 0, 1);
-          el.textContent = String(Math.round(target * (1 - Math.pow(1 - t, 4))));
+          live.textContent = String(Math.round(target * (1 - Math.pow(1 - t, 3))));
           if (t < 1) requestAnimationFrame(step);
         };
         requestAnimationFrame(step);
-      }, { threshold: 0.6 });
+      }, { threshold: 0.4 });
       observer.observe(el);
     });
   });

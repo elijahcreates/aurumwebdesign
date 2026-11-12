@@ -2,7 +2,7 @@
    hero headline and small artwork only. */
 :root {
   --bg: #0d0c0a;
-  --bg-alt: #12110e;
+  --bg-alt: #0d0c0a;
   --surface: #181612;
   --border: #2c2924;
   --text: #ece7dc;
@@ -20,13 +20,6 @@
   --hand: "Caveat", "Segoe Script", "Bradley Hand", cursive;
   --radius: 4px;
   --max: 1160px;
-  --glow: radial-gradient(closest-side,
-    rgba(201, 162, 74, 0.13) 0%,
-    rgba(201, 162, 74, 0.09) 22%,
-    rgba(201, 162, 74, 0.055) 42%,
-    rgba(201, 162, 74, 0.026) 62%,
-    rgba(201, 162, 74, 0.008) 82%,
-    rgba(201, 162, 74, 0) 100%);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-io: cubic-bezier(0.76, 0, 0.24, 1);
   /* When the hero entrance starts. Longer on the first visit, while the intro plays. */
@@ -162,7 +155,7 @@ p { margin: 0 0 1em; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(11, 11, 13, 0.82);
+  background: rgba(13, 12, 10, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
@@ -274,20 +267,10 @@ p { margin: 0 0 1em; }
   overflow: hidden;
   display: flex;
   align-items: center;
-  min-height: calc(100vh - 73px);
-  min-height: calc(100svh - 73px);
+  min-height: min(calc(100vh - 73px), 860px);
+  min-height: min(calc(100svh - 73px), 860px);
   padding: clamp(4.5rem, 10vw, 7rem) 0 clamp(5.5rem, 10vw, 7rem);
   text-align: center;
-}
-.hero-glow {
-  position: absolute;
-  top: -30%;
-  left: 50%;
-  width: 900px;
-  height: 900px;
-  translate: -50% 0;
-  background: var(--glow);
-  pointer-events: none;
 }
 
 .hero-inner { position: relative; }
@@ -631,10 +614,15 @@ h1 em {
   font-variant-numeric: lining-nums tabular-nums;
   line-height: 0.95;
   color: var(--gold);
+  white-space: nowrap;
 }
 .offer-amount .cur { font-size: 0.5em; vertical-align: 0.62em; margin-right: 0.04em; }
 .offer-note { max-width: 30rem; color: var(--muted); font-size: 1.08rem; margin-bottom: 1.6rem; }
-.offer-also { max-width: 30rem; margin: 1.4rem 0 0; font-size: 0.95rem; color: var(--muted); }
+.offer-also { max-width: 30rem; margin: 1.6rem 0 0; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.95rem; color: var(--muted); }
+/* The counting price: a hidden copy of the final number holds the width, so nothing beside it moves. */
+.count { position: relative; display: inline-block; }
+.count-ghost { visibility: hidden; }
+.count-live { position: absolute; left: 0; top: 0; }
 .offer-small, .form-small {
   margin: 0.9rem 0 0;
   font-size: 0.8rem;
@@ -943,6 +931,8 @@ h1 em {
   .nav-links .btn { margin-top: 1.2rem; width: 100%; }
   .logo-text span { display: none; }
   .hero-actions .btn { width: 100%; }
+  .hero-points { flex-direction: column; gap: 0; border-top: 1px solid var(--border); text-align: left; }
+  .hero-points li { padding: 0.85rem 0; border-bottom: 1px solid var(--border); }
   .form-actions { grid-template-columns: 1fr; }
   .contact-link { font-size: 1.1rem; }
   .faq-item summary { font-size: 1.25rem; padding: 1.15rem 0; }
