@@ -194,7 +194,6 @@ p { margin: 0 0 1em; }
   font-weight: 700;
   font-size: 1.25rem;
   color: var(--gold-light);
-  transition: box-shadow 0.4s, rotate 0.6s var(--ease);
 }
 .logo-mark::after {
   content: "";
@@ -203,7 +202,6 @@ p { margin: 0 0 1em; }
   background: linear-gradient(105deg, transparent 30%, rgba(245, 217, 139, 0.5) 50%, transparent 70%);
   translate: -120% 0;
 }
-.logo:hover .logo-mark { box-shadow: 0 0 22px -4px rgba(212, 168, 67, 0.7); }
 .logo:hover .logo-mark::after { translate: 120% 0; transition: translate 0.8s var(--ease); }
 .logo-text {
   font-family: var(--serif);
@@ -446,7 +444,6 @@ h1 em {
   border-radius: 6px;
   overflow: hidden;
   background: #1a1815;
-  box-shadow: 0 40px 70px -40px rgba(0, 0, 0, 0.9);
   transition: translate 0.6s var(--ease), border-color 0.4s;
 }
 .frame-bar { display: flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-bottom: 1px solid var(--border); }
@@ -461,7 +458,6 @@ h1 em {
   border-radius: 16px;
   outline: 1px solid #3a362f;
   overflow: hidden;
-  box-shadow: 0 24px 50px -18px rgba(0, 0, 0, 0.95);
   transition: translate 0.6s var(--ease);
 }
 .project:nth-of-type(even) .frame-phone { right: auto; left: -4%; }
@@ -871,7 +867,6 @@ h1 em {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.85);
   transition: scale 0.6s var(--ease), opacity 0.4s, background-color 0.25s;
 }
 .wa-fab:hover { background: var(--text); }
