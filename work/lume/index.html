@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lume | Wood-fired kitchen &amp; bar (concept site by Aurum Web Design)</title>
+  <meta name="description" content="A concept restaurant website designed and built by Aurum Web Design.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg: #14100c; --bg2: #1b1611; --cream: #f0e6d4; --muted: #a8997f; --ember: #e08a4a; --line: rgba(240, 230, 212, 0.16); --serif: "Fraunces", Georgia, serif; --sans: "Karla", system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--cream); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .concept { display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; padding: 0.55rem 1rem; background: #0b0907; font-size: 0.78rem; letter-spacing: 0.06em; color: var(--muted); }
+    .concept a { color: var(--cream); border-bottom: 1px solid var(--line); }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1.6rem 0; }
+    .brand { font-family: var(--serif); font-size: 1.5rem; letter-spacing: 0.42em; }
+    .links { display: flex; align-items: center; gap: 2.2rem; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .links a:not(.pill):hover { color: var(--ember); }
+    .pill { padding: 0.75em 1.5em; border: 1px solid var(--ember); border-radius: 99px; color: var(--ember); transition: background 0.25s, color 0.25s; }
+    .pill:hover { background: var(--ember); color: #14100c; }
+    .pill.solid { background: var(--ember); color: #14100c; }
+    .pill.solid:hover { background: var(--cream); border-color: var(--cream); }
+
+    .hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 4rem; align-items: center; padding: 3rem 0 6rem; }
+    .kicker { font-size: 0.78rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ember); }
+    h1 { margin: 1.2rem 0 1.6rem; font-family: var(--serif); font-weight: 300; font-size: clamp(3.2rem, 7.6vw, 6.6rem); line-height: 0.98; letter-spacing: -0.02em; }
+    h1 em { font-weight: 300; color: var(--ember); }
+    .hero p { max-width: 30rem; color: var(--muted); font-size: 1.1rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.6rem; margin-top: 2.2rem; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .hero-actions .text { border-bottom: 1px solid var(--line); padding-bottom: 0.2em; }
+    .scene { aspect-ratio: 4 / 5; border-radius: 300px 300px 6px 6px; overflow: hidden; }
+    .scene img, .room img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .room { margin-top: 2.5rem; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; }
+
+    .strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .strip .wrap { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .strip div { padding: 1.8rem 0; }
+    .strip div + div { padding-left: 2.5rem; border-left: 1px solid var(--line); }
+    .strip small, .label { display: block; margin-bottom: 0.4rem; font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); }
+    .strip b { font-family: var(--serif); font-size: 1.35rem; font-weight: 400; }
+
+    section { padding: 6.5rem 0; }
+    h2 { margin: 0 0 3rem; font-family: var(--serif); font-weight: 300; font-size: clamp(2.3rem, 4.6vw, 3.8rem); line-height: 1.05; letter-spacing: -0.01em; }
+    h2 em { color: var(--ember); }
+    .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem 5rem; }
+    .menu h3 { margin: 0 0 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--line); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ember); }
+    .dish { display: grid; grid-template-columns: 1fr auto; gap: 0.2rem 1.5rem; padding: 0.95rem 0; border-bottom: 1px dotted var(--line); }
+    .dish b { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; }
+    .dish span { font-family: var(--serif); font-size: 1.2rem; color: var(--ember); }
+    .dish p { grid-column: 1 / -1; margin: 0; font-size: 0.95rem; color: var(--muted); }
+
+    .story { background: var(--bg2); }
+    .story .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .story p { margin: 0 0 1.2rem; font-family: var(--serif); font-size: 1.5rem; font-weight: 300; line-height: 1.45; }
+    .story p + p { font-family: var(--sans); font-size: 1.05rem; color: var(--muted); }
+
+    .reserve { text-align: center; }
+    .reserve h2 { margin-bottom: 1.4rem; }
+    .reserve p { margin: 0 auto 2.2rem; max-width: 30rem; color: var(--muted); }
+    .reserve .pill { display: inline-block; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    footer { border-top: 1px solid var(--line); padding: 2.2rem 0; font-size: 0.85rem; color: var(--muted); }
+    footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+    @media (max-width: 820px) {
+      .wrap { padding: 0 20px; }
+      .links a:not(.pill) { display: none; }
+      .hero { grid-template-columns: 1fr; gap: 2.5rem; padding: 1.5rem 0 4rem; }
+      .scene { aspect-ratio: 1 / 1; max-width: 420px; }
+      .story h2 { margin-bottom: 0; }
+      .strip .wrap { grid-template-columns: 1fr; }
+      .strip div { padding: 1.2rem 0; }
+      .strip div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+      section { padding: 4.5rem 0; }
+      .menu, .story .wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+      .story p { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="concept"><span>Concept site designed and built by Aurum Web Design</span><a href="../../#work">&larr; Back to Aurum</a></div>
+
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#top" id="top">LUME</a>
+      <div class="links"><a href="#menu">Menu</a><a href="#story">Story</a><a href="#reserve">Visit</a><a class="pill" href="#reserve">Reserve</a></div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <span class="kicker">Wood-fired kitchen &amp; bar</span>
+        <h1>Slow evenings, <em>open flame.</em></h1>
+        <p>Seasonal plates cooked over oak and cherry wood, a short list of good wine, and a room made for staying a while.</p>
+        <div class="hero-actions"><a class="pill solid" href="#reserve">Reserve a table</a><a class="text" href="#menu">See the menu</a></div>
+      </div>
+      <div class="scene"><img src="img/table.jpg" alt="A plated dish on a candlelit table with glasses of wine" width="1100" height="733"></div>
+    </header>
+  </div>
+
+  <div class="strip">
+    <div class="wrap">
+      <div><small>Open</small><b>Tuesday to Sunday, 5pm &ndash; late</b></div>
+      <div><small>Find us</small><b>14 Orchard Lane</b></div>
+      <div><small>Tonight</small><b>Whole roasted sea bream</b></div>
+    </div>
+  </div>
+
+  <section id="menu">
+    <div class="wrap">
+      <h2>From the <em>fire</em></h2>
+      <div class="menu">
+        <div>
+          <h3>To start</h3>
+          <div class="dish"><b>Charred sourdough</b><span>8</span><p>Cultured butter, smoked salt</p></div>
+          <div class="dish"><b>Ember-roasted beets</b><span>13</span><p>Whipped feta, hazelnut, dill</p></div>
+          <div class="dish"><b>Blistered padr&oacute;n peppers</b><span>11</span><p>Lemon, sea salt</p></div>
+          <div class="dish"><b>Burrata</b><span>16</span><p>Grilled peach, basil oil</p></div>
+        </div>
+        <div>
+          <h3>Mains</h3>
+          <div class="dish"><b>Half chicken</b><span>27</span><p>Preserved lemon, charred greens</p></div>
+          <div class="dish"><b>Whole sea bream</b><span>32</span><p>Fennel, brown butter, capers</p></div>
+          <div class="dish"><b>Bavette steak</b><span>34</span><p>Chimichurri, fire-roasted onion</p></div>
+          <div class="dish"><b>Hearth-baked gnocchi</b><span>23</span><p>Tomato, smoked ricotta</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story" id="story">
+    <div class="wrap">
+      <div><span class="label">Our story</span><h2>One fire, <em>one room.</em></h2><div class="room"><img src="img/room.jpg" alt="The dining room, with dark wood tables and low lighting" width="1300" height="867" loading="lazy"></div></div>
+      <div>
+        <p>Everything on the menu passes through the same wood-fired hearth, from the bread at the start of the night to the fruit at the end of it.</p>
+        <p>We keep the menu short so we can cook it properly, and we change it when the season does. The room seats forty, the kitchen is open, and nobody will rush you.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reserve" id="reserve">
+    <div class="wrap">
+      <span class="label">Reservations</span>
+      <h2>Pull up a <em>chair.</em></h2>
+      <p>Tables for two to eight, Tuesday to Sunday. For larger groups, get in touch and we&rsquo;ll set aside the long table.</p>
+      <a class="pill solid" href="#reserve">Reserve a table</a>
+    </div>
+  </section>
+
+  <footer><div class="wrap"><span>Lume &middot; 14 Orchard Lane</span><span>A concept site by <a href="../../">Aurum Web Design</a></span></div></footer>
+</body>
+</html>

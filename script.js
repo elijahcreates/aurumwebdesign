@@ -133,103 +133,6 @@
     });
   });
 
-  /* ---------- Marquee: speeds up and leans when you scroll ---------- */
-  safely(() => {
-    const track = $(".marquee-track");
-    if (!motion || !track) return;
-    const set = $(".marquee-set", track);
-    let setWidth = set.offsetWidth;
-    const fill = () => {
-      setWidth = set.offsetWidth;
-      const needed = Math.ceil(window.innerWidth / setWidth) + 1;
-      while (track.children.length < needed + 1) track.appendChild(set.cloneNode(true));
-    };
-    fill();
-    window.addEventListener("resize", fill);
-
-    let x = 0, velocity = 0, lastY = window.scrollY, lastTime = performance.now(), running = false, visible = true;
-    const tick = (now) => {
-      if (!running) return;
-      const dt = Math.min(now - lastTime, 50) / 1000;
-      lastTime = now;
-      const y = window.scrollY;
-      velocity = lerp(velocity, y - lastY, 0.12);
-      lastY = y;
-      x -= (55 + Math.abs(velocity) * 28) * dt;
-      if (x <= -setWidth) x += setWidth;
-      const skew = clamp(velocity * -0.2, -3, 3);
-      track.style.transform = `translate3d(${x.toFixed(2)}px, 0, 0) skewX(${skew.toFixed(2)}deg)`;
-      requestAnimationFrame(tick);
-    };
-    const update = () => {
-      const shouldRun = visible && !document.hidden;
-      if (shouldRun && !running) {
-        running = true;
-        lastTime = performance.now();
-        lastY = window.scrollY;
-        requestAnimationFrame(tick);
-      } else if (!shouldRun) running = false;
-    };
-    document.addEventListener("visibilitychange", update);
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; update(); }).observe(track.parentElement);
-    }
-    update();
-  });
-
-  /* ---------- Manifesto: words light up as you scroll ---------- */
-  safely(() => {
-    const el = $("[data-fill]");
-    if (!motion || !el) return;
-    const words = splitWords(el, "fw");
-    scrollTasks.push(() => {
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      if (rect.bottom < -vh || rect.top > vh * 2) return;
-      const progress = clamp((vh * 0.82 - rect.top) / (vh * 0.42 + rect.height), 0, 1);
-      const head = progress * (words.length + 4);
-      words.forEach((word, i) => {
-        word.style.opacity = (0.13 + 0.87 * clamp((head - i) / 4, 0, 1)).toFixed(3);
-      });
-    });
-  });
-
-  /* ---------- Process: the browser builds itself as you scroll ---------- */
-  safely(() => {
-    const section = $(".process");
-    if (!section) return;
-    const browser = $(".browser", section);
-    const steps = $$(".pstep", section);
-    if (!motion) return;
-
-    let current = 0;
-    const setStage = (stage) => {
-      if (stage === current) return;
-      current = stage;
-      browser.dataset.stage = String(stage);
-      steps.forEach((step, i) => {
-        step.classList.toggle("is-active", i === stage - 1);
-        step.classList.toggle("is-done", i < stage - 1);
-      });
-    };
-    const scrollRange = () => section.offsetHeight - window.innerHeight;
-
-    scrollTasks.push(() => {
-      const range = scrollRange();
-      const progress = range > 0 ? clamp(-section.getBoundingClientRect().top / range, 0, 1) : 0;
-      setStage(Math.min(steps.length, Math.floor(progress * steps.length) + 1));
-      const line = steps.length > 1 ? clamp((progress * steps.length - 0.5) / (steps.length - 1), 0, 1) : 1;
-      section.style.setProperty("--p", line.toFixed(4));
-    });
-
-    steps.forEach((step, i) => {
-      step.addEventListener("click", () => {
-        const top = section.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top: top + scrollRange() * ((i + 0.5) / steps.length), behavior: "smooth" });
-      });
-    });
-  });
-
   /* ---------- Floating WhatsApp button appears after the first scroll ---------- */
   safely(() => {
     const fab = $(".wa-fab");
@@ -266,35 +169,6 @@
       }, { threshold: 0.6 });
       observer.observe(el);
     });
-  });
-
-  /* ---------- Before / after slider ---------- */
-  safely(() => {
-    const compare = $(".compare");
-    if (!compare) return;
-    const input = $("input", compare);
-    let touched = false;
-    const set = (value) => compare.style.setProperty("--pos", `${value}%`);
-    input.addEventListener("input", () => { touched = true; set(input.value); });
-    set(input.value);
-
-    // A short sweep the first time it appears, to show that it moves.
-    if (!motion || !("IntersectionObserver" in window)) return;
-    const observer = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return;
-      observer.disconnect();
-      const start = performance.now() + 500;
-      const duration = 2400;
-      const step = (now) => {
-        if (touched) return;
-        const t = clamp((now - start) / duration, 0, 1);
-        const value = 50 + 26 * Math.sin(t * Math.PI * 2) * (1 - t * 0.35);
-        set(t < 1 ? value : 50);
-        if (t < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
-    }, { threshold: 0.5 });
-    observer.observe(compare);
   });
 
   /* ---------- Contact form: sends through WhatsApp or the visitor's email app ---------- */
