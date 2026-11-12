@@ -142,6 +142,9 @@ p { margin: 0 0 1em; }
 .btn:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
 .btn-ghost { background: transparent; border-color: rgba(236, 231, 220, 0.3); color: var(--text); }
 .btn-ghost:hover { background: transparent; border-color: var(--gold-light); color: var(--gold-light); }
+/* WhatsApp actions are green wherever they appear. */
+.btn-wa, .btn-chat.btn-wa { background: #25d366; border-color: #25d366; color: #fff; }
+.btn-wa:hover, .btn-chat.btn-wa:hover { background: #1ebe5a; border-color: #1ebe5a; color: #fff; }
 .btn-small { padding: 0.8em 1.25em; font-size: 0.7rem; }
 .btn-large { padding: 1.2em 2em; font-size: 0.82rem; }
 .btn-icon { width: 1.35em; height: 1.35em; fill: currentColor; flex: none; }
