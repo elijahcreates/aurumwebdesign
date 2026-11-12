@@ -1,6 +1,6 @@
 # Aurum Web Design
 
-*The Gold Standard in Web Design.*
+*Websites that look like you paid more.*
 
 Website for **Aurum Web Design** (aurumwebdesign.com). "Aurum" is Latin for gold.
 
