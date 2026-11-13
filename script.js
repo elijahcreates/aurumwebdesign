@@ -14,7 +14,7 @@
   const safely = (fn) => { try { fn(); } catch (err) { console.error(err); } };
 
   const WHATSAPP_NUMBER = "19147481692";
-  const CONTACT_EMAIL = "elijahnisenbaum1@gmail.com";
+  const CONTACT_EMAIL = "aurumwebsitedesigns@gmail.com";
 
   // Things that update while the page scrolls.
   const scrollTasks = [];
