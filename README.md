@@ -10,7 +10,7 @@ Website for **Aurum Web Design** (aurumwebdesign.com). "Aurum" is Latin for gold
 - `styles.css`: colors, fonts and layout (gold and black theme)
 - `script.js`: animations, mobile menu and contact form
 - `favicon.svg`: the "Au" browser-tab icon
-- `work/`: two concept websites (Lume and Hartwell Build) shown on the homepage, plus preview images of all four projects in `work/shots/`. Photos in the concept sites are from Unsplash (free to use)
+- `work/shots/`: preview images of the live projects shown on the homepage
 - `ad/`: a standalone promotional page
 
 ## Run it locally
